@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  sql-server:
+    image: netcoremssql
+    ports:
+      - "1433:1433"
+
+  ui:
+    image: ${DOCKER_REGISTRY-}ui
+    build:
+      context: .
+      dockerfile: UI/Dockerfile
+    ports:
+      - "8080:80"
+      - "8081:443"
+    depends_on:
+      - sql-server
